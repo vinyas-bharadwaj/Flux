@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -324,4 +325,81 @@ func (h *PostsHandler) LikePost(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"post": post, "message": "Post liked successfully"})
+}
+
+// GetFollowingPosts - Get all posts from users that the authenticated user is following
+func (h *PostsHandler) GetFollowingPosts(c *gin.Context) {
+	userID, exists := c.Get("user_id")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"error": "User not authenticated",
+		})
+		return
+	}
+
+	// Get pagination parameters
+	page := 1
+	limit := 20 // Default limit for feed
+	if pageStr := c.Query("page"); pageStr != "" {
+		if p, err := strconv.Atoi(pageStr); err == nil && p > 0 {
+			page = p
+		}
+	}
+	if limitStr := c.Query("limit"); limitStr != "" {
+		if l, err := strconv.Atoi(limitStr); err == nil && l > 0 && l <= 50 {
+			limit = l
+		}
+	}
+
+	offset := (page - 1) * limit
+
+	// First, get the list of users that the current user is following
+	var followingUserIDs []uint
+	if err := h.db.Table("friends").
+		Select("following_id").
+		Where("follower_id = ?", userID).
+		Pluck("following_id", &followingUserIDs).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to fetch following users",
+		})
+		return
+	}
+
+	// If not following anyone, return empty posts
+	if len(followingUserIDs) == 0 {
+		c.JSON(http.StatusOK, gin.H{
+			"posts":       []models.Post{},
+			"total_count": 0,
+			"page":        page,
+			"limit":       limit,
+			"total_pages": 0,
+		})
+		return
+	}
+
+	// Get posts from followed users
+	var posts []models.Post
+	if err := h.db.Preload("User").
+		Where("user_id IN ?", followingUserIDs).
+		Order("created_at DESC").
+		Offset(offset).
+		Limit(limit).
+		Find(&posts).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to fetch following posts",
+		})
+		return
+	}
+
+	// Get total count for pagination
+	var totalCount int64
+	h.db.Model(&models.Post{}).Where("user_id IN ?", followingUserIDs).Count(&totalCount)
+
+	c.JSON(http.StatusOK, gin.H{
+		"posts":       posts,
+		"total_count": totalCount,
+		"page":        page,
+		"limit":       limit,
+		"total_pages": (totalCount + int64(limit) - 1) / int64(limit),
+	})
 }

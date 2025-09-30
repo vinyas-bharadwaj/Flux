@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+  <defs>
+    <!-- Primary gradient - High contrast -->
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#003399;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0066ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Secondary gradient - Medium contrast -->
+    <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0066ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ccff;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Tertiary gradient - Light contrast -->
+    <linearGradient id="tertiaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#00ccff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#33ddff;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Glow filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Drop shadow -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.3" flood-color="#0066ff"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer ring - largest -->
+  <circle cx="150" cy="150" r="120" 
+          stroke="url(#primaryGradient)" 
+          stroke-width="12" 
+          fill="none" 
+          filter="url(#shadow)"
+          stroke-linecap="round"
+          stroke-dasharray="0 30"/>
+  
+  <!-- Second ring -->
+  <circle cx="150" cy="150" r="90" 
+          stroke="url(#secondaryGradient)" 
+          stroke-width="10" 
+          fill="none" 
+          stroke-linecap="round"
+          stroke-dasharray="0 25"
+          transform="rotate(45 150 150)"/>
+  
+  <!-- Third ring -->
+  <circle cx="150" cy="150" r="65" 
+          stroke="url(#tertiaryGradient)" 
+          stroke-width="8" 
+          fill="none" 
+          stroke-linecap="round"
+          stroke-dasharray="0 20"
+          transform="rotate(90 150 150)"/>
+  
+  <!-- Inner ring -->
+  <circle cx="150" cy="150" r="40" 
+          stroke="url(#primaryGradient)" 
+          stroke-width="6" 
+          fill="none" 
+          stroke-linecap="round"
+          stroke-dasharray="0 15"
+          transform="rotate(135 150 150)"/>
+  
+  <!-- Central core circle -->
+  <circle cx="150" cy="150" r="15" 
+          fill="url(#primaryGradient)" 
+          filter="url(#glow)"/>
+  
+  <!-- Connection nodes - positioned at strategic points -->
+  <circle cx="150" cy="30" r="5" 
+          fill="url(#primaryGradient)"/>
+  <circle cx="270" cy="150" r="5" 
+          fill="url(#primaryGradient)"/>
+  <circle cx="150" cy="270" r="5" 
+          fill="url(#primaryGradient)"/>
+  <circle cx="30" cy="150" r="5" 
+          fill="url(#primaryGradient)"/>
+  
+  <!-- Diagonal connection nodes -->
+  <circle cx="213" cy="87" r="4" 
+          fill="url(#secondaryGradient)"/>
+  <circle cx="213" cy="213" r="4" 
+          fill="url(#secondaryGradient)"/>
+  <circle cx="87" cy="213" r="4" 
+          fill="url(#secondaryGradient)"/>
+  <circle cx="87" cy="87" r="4" 
+          fill="url(#secondaryGradient)"/>
+  
+  <!-- Flux text integrated into design -->
+  <text x="150" y="150" 
+        text-anchor="middle" 
+        dominant-baseline="middle" 
+        font-family="Arial, sans-serif" 
+        font-size="24" 
+        font-weight="bold" 
+        fill="white" 
+        opacity="0.9">F</text>
+</svg>
