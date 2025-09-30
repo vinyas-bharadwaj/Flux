@@ -53,7 +53,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             {isLoggedIn ? (
               <>
-                <NavLink to="/home" isActive={isActiveLink('/home')}>
+                <NavLink to="/" isActive={isActiveLink('/')}>
                   Home
                 </NavLink>
                 <NavLink to="/posts" isActive={isActiveLink('/posts')}>
@@ -64,9 +64,6 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink to="/messages" isActive={isActiveLink('/messages')}>
                   Messages
-                </NavLink>
-                <NavLink to="/profile" isActive={isActiveLink('/profile')}>
-                  Profile
                 </NavLink>
                 <button
                   onClick={handleLogout}

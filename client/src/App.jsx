@@ -7,7 +7,8 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Posts from './pages/Posts'
-import Friends from './pages/Friends' 
+import Friends from './pages/Friends'
+import Messages from './pages/Messages' 
 
 // Main App Routes Component
 const AppRoutes = () => {
@@ -35,7 +36,11 @@ const AppRoutes = () => {
               <Friends />
             </ProtectedRoute>
           } />
-          <Route path="/messages" element={<div className="p-8 bg-gray-50 min-h-screen"><h1 className="text-2xl font-bold">Messages Page</h1></div>} />
+          <Route path="/messages" element={
+            <ProtectedRoute>
+              <Messages />
+            </ProtectedRoute>
+          } />
           <Route path="/profile" element={<div className="p-8 bg-gray-50 min-h-screen"><h1 className="text-2xl font-bold">Profile Page</h1></div>} />
         </Routes>
       </div>
