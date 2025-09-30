@@ -58,7 +58,9 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 			friendsRoutes.GET("/status/:id", friendsHandler.CheckFollowStatus)
 		}
 
-		websocketRoutes := protected.Group("/ws")
+		// WebSocket routes with specialized auth middleware
+		websocketRoutes := router.Group("/ws")
+		websocketRoutes.Use(middleware.WSAuthMiddleware())
 		{
 			websocketRoutes.GET("/connect", websocketHandler.HandleConnection)
 		}
