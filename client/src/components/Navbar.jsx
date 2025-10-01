@@ -56,9 +56,6 @@ const Navbar = () => {
                 <NavLink to="/" isActive={isActiveLink('/')}>
                   Home
                 </NavLink>
-                <NavLink to="/posts" isActive={isActiveLink('/posts')}>
-                  Posts
-                </NavLink>
                 <NavLink to="/friends" isActive={isActiveLink('/friends')}>
                   Friends
                 </NavLink>
@@ -108,11 +105,8 @@ const Navbar = () => {
             <div className="px-4 py-4 space-y-3">
               {isLoggedIn ? (
                 <>
-                  <MobileNavLink to="/home" onClick={() => setIsMobileMenuOpen(false)}>
+                  <MobileNavLink to="/" onClick={() => setIsMobileMenuOpen(false)}>
                     Home
-                  </MobileNavLink>
-                  <MobileNavLink to="/posts" onClick={() => setIsMobileMenuOpen(false)}>
-                    Posts
                   </MobileNavLink>
                   <MobileNavLink to="/friends" onClick={() => setIsMobileMenuOpen(false)}>
                     Friends

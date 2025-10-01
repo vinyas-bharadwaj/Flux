@@ -29,7 +29,7 @@ const Login = () => {
       
       if (result.token) {
         localStorage.setItem('token', result.token);
-        navigate('/home');
+        navigate('/');
       } else {
         setError(result.error || 'Login failed');
       }
